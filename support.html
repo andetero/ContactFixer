@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — ContactFixer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0e0e10; --surface: #18181b; --border: #27272a;
+    --green: #4ade80; --green-dim: rgba(74,222,128,0.12);
+    --text: #f4f4f5; --muted: #71717a;
+    --mono: 'DM Mono', monospace; --serif: 'Fraunces', serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 15px; line-height: 1.7; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  .nav-logo .dot { color: var(--green); }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.05em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .page { max-width: 720px; margin: 0 auto; padding: 5rem 1.5rem 6rem; }
+
+  .eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); text-transform: uppercase; margin-bottom: 1rem; }
+  h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; line-height: 1.1; margin-bottom: 0.75rem; }
+  .subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 4rem; }
+
+  /* FAQ */
+  .faq-section-label {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 1rem; margin-top: 3rem;
+  }
+  .faq-section-label:first-of-type { margin-top: 0; }
+
+  .faq { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 1rem; }
+
+  details {
+    background: var(--surface);
+    transition: background 0.15s;
+  }
+  details[open] { background: #1c1c1f; }
+  details + details { border-top: 1px solid var(--border); }
+
+  summary {
+    padding: 1.1rem 1.5rem;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: '+';
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+
+  .faq-body {
+    padding: 0 1.5rem 1.25rem;
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .faq-body p { margin-bottom: 0.6rem; }
+  .faq-body p:last-child { margin-bottom: 0; }
+  .faq-body code {
+    background: var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--green);
+  }
+
+  /* Contact card */
+  .contact-card {
+    margin-top: 4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: var(--green-dim);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-card h3 { font-family: var(--serif); font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .contact-card p { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+  .contact-card a {
+    display: inline-block;
+    background: var(--green);
+    color: #000;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s;
+  }
+  .contact-card a:hover { opacity: 0.85; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 1.5rem;
+    text-align: center; font-size: 0.75rem; color: var(--muted);
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--green); }
+
+  @media (max-width: 600px) {
+    .contact-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">ContactFixer<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<main class="page">
+  <p class="eyebrow">Help</p>
+  <h1>Support</h1>
+  <p class="subtitle">Answers to common questions about ContactFixer.</p>
+
+  <p class="faq-section-label">Getting started</p>
+  <div class="faq">
+    <details>
+      <summary>How do I install ContactFixer?</summary>
+      <div class="faq-body">
+        <p>ContactFixer is installed via Xcode directly to your iPhone. Open the <code>.xcodeproj</code> file, connect your device, set your Apple ID as the signing team, and press Run. A free Apple ID is all you need — no paid developer account required for personal use.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Why does the app ask for Contacts permission?</summary>
+      <div class="faq-body">
+        <p>ContactFixer needs read and write access to your contacts in order to find phone numbers missing the +1 country code and update them. This is a standard iOS permission — the same one the built-in Contacts app uses.</p>
+        <p>If you accidentally denied permission, go to <strong>Settings → Privacy & Security → Contacts</strong> and enable ContactFixer.</p>
+      </div>
+    </details>
+    <details>
+      <summary>What iOS version is required?</summary>
+      <div class="faq-body">
+        <p>ContactFixer requires iOS 16 or later.</p>
+      </div>
+    </details>
+  </div>
+
+  <p class="faq-section-label">How it works</p>
+  <div class="faq">
+    <details>
+      <summary>Which phone numbers does ContactFixer change?</summary>
+      <div class="faq-body">
+        <p>ContactFixer only updates US phone numbers that are missing the +1 country code. Specifically, it acts on:</p>
+        <p>• <strong>10-digit numbers</strong> like <code>(708) 555-0142</code> or <code>3125550198</code> — these become <code>+1XXXXXXXXXX</code></p>
+        <p>• <strong>11-digit numbers starting with 1</strong> like <code>17085550031</code> — these become <code>+17085550031</code></p>
+        <p>Any number already starting with <code>+</code> is left completely untouched, regardless of country.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Will it affect my international contacts?</summary>
+      <div class="faq-body">
+        <p>No. Any number already beginning with <code>+</code> is skipped entirely. A UK number stored as <code>+44 7911 123456</code> will not be modified.</p>
+        <p>Note that Canada, the Bahamas, and many Caribbean nations also use the +1 country code (the North American Numbering Plan). 10-digit numbers from those countries will also receive the +1 prefix — which is correct for them.</p>
+      </div>
+    </details>
+    <details>
+      <summary>What about contacts with only a company name?</summary>
+      <div class="faq-body">
+        <p>ContactFixer fully supports company-only contacts. If a contact has no first or last name, the company/organization name is displayed instead.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Can I undo the changes after applying?</summary>
+      <div class="faq-body">
+        <p>ContactFixer doesn't include a built-in undo feature, but you can protect yourself before running it:</p>
+        <p>On a Mac, open <strong>Contacts.app</strong>, press ⌘A to select all contacts, then go to <strong>File → Export → Export vCard…</strong> and save the <code>.vcf</code> file somewhere safe. If you ever need to restore, simply drag that file back into Contacts.app.</p>
+        <p>If you use iCloud Contacts, your contacts are also continuously synced to iCloud.com, which provides an additional safety net.</p>
+      </div>
+    </details>
+  </div>
+
+  <p class="faq-section-label">Privacy & data</p>
+  <div class="faq">
+    <details>
+      <summary>Does ContactFixer send my contacts anywhere?</summary>
+      <div class="faq-body">
+        <p>No. ContactFixer makes no network requests whatsoever. All processing happens entirely on your device using Apple's native Contacts framework. Your data never leaves your iPhone.</p>
+        <p>You can verify this by running the app in airplane mode — it works identically.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Does ContactFixer collect any data or analytics?</summary>
+      <div class="faq-body">
+        <p>No. There are no analytics, crash reporters, or tracking of any kind. See the full <a href="privacy.html" style="color: var(--green);">Privacy Policy</a> for details.</p>
+      </div>
+    </details>
+  </div>
+
+  <p class="faq-section-label">Troubleshooting</p>
+  <div class="faq">
+    <details>
+      <summary>The app shows 0 contacts to update — is something wrong?</summary>
+      <div class="faq-body">
+        <p>Not at all — it means all your US phone numbers already have the +1 country code. Nothing needs to be changed.</p>
+      </div>
+    </details>
+    <details>
+      <summary>The app won't install on my iPhone.</summary>
+      <div class="faq-body">
+        <p>A few things to check:</p>
+        <p>• Make sure your Apple ID is set as the signing team in <strong>Signing & Capabilities</strong></p>
+        <p>• Set a unique Bundle Identifier, e.g. <code>com.yourname.ContactFixer</code></p>
+        <p>• Go to <strong>Settings → General → VPN & Device Management</strong> on your iPhone and trust your developer certificate after the first install</p>
+        <p>• Ensure your iPhone is running iOS 16 or later</p>
+      </div>
+    </details>
+    <details>
+      <summary>I see Xcode build warnings about Swift concurrency.</summary>
+      <div class="faq-body">
+        <p>Make sure you're using the latest version of the ContactFixer source from the GitHub repository. Earlier versions had concurrency warnings that have since been resolved by rewriting the contact store access using a dedicated Swift actor.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="contact-card">
+    <div class="contact-icon">✉️</div>
+    <div>
+      <h3>Still need help?</h3>
+      <p>If your question isn't answered above, open an issue on GitHub and we'll get back to you.</p>
+      <a href="https://github.com" target="_blank" rel="noopener">Open an issue on GitHub</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="support.html">Support</a>
+  </div>
+  <p>© 2026 ContactFixer. Made for iPhone.</p>
+</footer>
+
+</body>
+</html>

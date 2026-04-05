@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ContactFixer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0e0e10; --surface: #18181b; --border: #27272a;
+    --green: #4ade80; --green-dim: rgba(74,222,128,0.12);
+    --text: #f4f4f5; --muted: #71717a;
+    --mono: 'DM Mono', monospace; --serif: 'Fraunces', serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 15px; line-height: 1.7; }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  .nav-logo .dot { color: var(--green); }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.05em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 6rem;
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green);
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300; line-height: 1.1; margin-bottom: 0.75rem;
+  }
+  .updated { font-size: 0.78rem; color: var(--muted); margin-bottom: 3rem; }
+
+  .summary-box {
+    background: var(--green-dim);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+  .summary-box strong { color: var(--green); }
+
+  h2 {
+    font-family: var(--serif); font-size: 1.2rem;
+    font-weight: 600; margin: 2.5rem 0 0.75rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.8; }
+  ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+  ul li { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; line-height: 1.8; }
+  strong { color: var(--text); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 1.5rem;
+    text-align: center; font-size: 0.75rem; color: var(--muted);
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">ContactFixer<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<main class="page">
+  <p class="eyebrow">Legal</p>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: April 2026</p>
+
+  <div class="summary-box">
+    <strong>The short version:</strong> ContactFixer does not collect, store, transmit, or share any of your data. Your contacts stay on your device. There are no servers, no accounts, and no analytics.
+  </div>
+
+  <h2>Information we collect</h2>
+  <p><strong>None.</strong> ContactFixer does not collect any personal information, usage data, crash reports, or analytics of any kind.</p>
+
+  <h2>How your contacts are used</h2>
+  <p>ContactFixer requests access to your contacts solely to perform its core function: reading phone numbers and writing standardized versions back to your device. Specifically, the app:</p>
+  <ul>
+    <li>Reads contact names and phone numbers to identify numbers missing the +1 country code</li>
+    <li>Writes updated phone numbers back to the same contacts using Apple's native Contacts framework</li>
+    <li>Does not read any other contact fields (email, address, notes, etc.)</li>
+    <li>Does not store, cache, or log any contact information</li>
+    <li>Does not transmit any contact data over the network</li>
+  </ul>
+  <p>All processing happens entirely on your device. No contact data ever leaves your iPhone.</p>
+
+  <h2>Network access</h2>
+  <p>ContactFixer makes <strong>no network requests</strong> of any kind. The app has no backend, no API, and no external services. You can verify this by running the app in airplane mode — it works identically.</p>
+
+  <h2>Third-party services</h2>
+  <p>ContactFixer uses no third-party SDKs, analytics tools, advertising networks, or crash reporting services. The only framework used is Apple's native Contacts framework, which is part of iOS.</p>
+
+  <h2>Data retention</h2>
+  <p>Because no data is collected, there is nothing to retain or delete. Uninstalling the app removes it entirely from your device with no residual data anywhere.</p>
+
+  <h2>Children's privacy</h2>
+  <p>ContactFixer does not collect information from anyone, including children under the age of 13.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this privacy policy changes, the updated version will be posted on this page with a revised date. Given the nature of the app — no data collection — meaningful changes to this policy are unlikely.</p>
+
+  <h2>Contact</h2>
+  <p>If you have questions about this privacy policy, please use the <a href="support.html" style="color: var(--green);">support page</a>.</p>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="support.html">Support</a>
+  </div>
+  <p>© 2026 ContactFixer. Made for iPhone.</p>
+</footer>
+
+</body>
+</html>
