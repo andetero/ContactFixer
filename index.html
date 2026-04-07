@@ -3,510 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ContactFixer — Standardize Your Phone Numbers</title>
-<meta name="description" content="ContactFixer adds the +1 country code to all your US phone numbers automatically. Free, private, and runs entirely on your iPhone.">
+<title>ContactFixer</title>
+<meta name="description" content="Adds +1 to your US phone contacts. Free, private, on-device.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #0e0e10;
-    --surface: #18181b;
-    --border: #27272a;
-    --green: #4ade80;
-    --green-dim: rgba(74,222,128,0.12);
-    --text: #f4f4f5;
-    --muted: #71717a;
-    --mono: 'DM Mono', monospace;
-    --serif: 'Fraunces', serif;
+    --bg: #0e0e10; --surface: #18181b; --border: #27272a;
+    --green: #4ade80; --text: #f4f4f5; --muted: #71717a;
+    --mono: 'DM Mono', monospace; --serif: 'Fraunces', serif;
   }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 15px; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
 
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 15px;
-    line-height: 1.7;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 2rem;
-    background: rgba(14,14,16,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .nav-logo .dot { color: var(--green); }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  .nav-logo span { color: var(--green); }
   .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
   .nav-links a:hover { color: var(--green); }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 8rem 1.5rem 4rem;
-    text-align: center;
-    position: relative;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(74,222,128,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 1.5rem; text-align: center; }
 
-  .hero-eyebrow {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-  }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(2.8rem, 8vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    max-width: 800px;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.1s forwards;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--green);
-  }
-  .hero-sub {
-    font-size: 0.95rem;
-    color: var(--muted);
-    max-width: 480px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.2s forwards;
-  }
+  h1 { font-family: var(--serif); font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  h1 em { font-style: italic; color: var(--green); }
+  .sub { font-size: 0.9rem; color: var(--muted); max-width: 360px; margin-bottom: 3rem; }
 
-  /* PHONE MOCKUP */
-  .phone-wrap {
-    position: relative;
-    width: 200px;
-    margin: 0 auto 3.5rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.3s forwards;
-  }
-  .phone {
-    width: 200px;
-    height: 400px;
-    background: var(--surface);
-    border: 2px solid #3f3f46;
-    border-radius: 32px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-  }
-  .phone-notch {
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 80px; height: 20px;
-    background: var(--bg);
-    border-radius: 0 0 14px 14px;
-    z-index: 2;
-  }
-  .phone-screen {
-    position: absolute;
-    inset: 8px;
-    background: #0e0e10;
-    border-radius: 26px;
-    display: flex;
-    flex-direction: column;
-    padding: 30px 14px 14px;
-    gap: 6px;
-    overflow: hidden;
-  }
-  .phone-title {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-    margin-top: 4px;
-  }
-  .contact-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 7px 10px;
-    background: var(--surface);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    animation: slideIn 0.4s ease forwards;
-    opacity: 0;
-  }
-  .contact-row:nth-child(2) { animation-delay: 0.8s; }
-  .contact-row:nth-child(3) { animation-delay: 1.0s; }
-  .contact-row:nth-child(4) { animation-delay: 1.2s; }
-  .contact-row:nth-child(5) { animation-delay: 1.4s; }
-  .contact-name { font-size: 0.65rem; color: var(--text); }
-  .contact-num { font-size: 0.6rem; }
-  .old { color: #f87171; text-decoration: line-through; }
-  .new { color: var(--green); }
-  .arrow { font-size: 0.55rem; color: var(--muted); margin: 0 3px; }
+  .demo { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.75rem; font-size: 0.85rem; width: 100%; max-width: 400px; text-align: left; }
+  .row { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom: none; }
+  .old { color: #f87171; flex: 1; }
+  .arr { color: var(--muted); font-size: 0.7rem; }
+  .new { color: var(--green); flex: 1; text-align: right; }
 
-  .phone-btn {
-    margin-top: auto;
-    background: var(--green);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-  }
-
-  /* FEATURES */
-  .section {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem;
-  }
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .section h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 3rem;
-  }
-
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  .feature {
-    background: var(--surface);
-    padding: 2rem;
-    transition: background 0.2s;
-  }
-  .feature:hover { background: #1f1f23; }
-  .feature-icon {
-    width: 36px; height: 36px;
-    background: var(--green-dim);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-  }
-  .feature h3 {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-  }
-  .feature p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-
-  /* HOW IT WORKS */
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: relative;
-  }
-  .steps::before {
-    content: '';
-    position: absolute;
-    left: 20px; top: 0; bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-  .step {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-    position: relative;
-  }
-  .step-num {
-    width: 40px; height: 40px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem;
-    color: var(--green);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-  .step-content h3 {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.3rem;
-  }
-  .step-content p { font-size: 0.82rem; color: var(--muted); }
-
-  /* TRANSFORM DEMO */
-  .transform-demo {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-  }
-  .transform-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .transform-row:last-child { border-bottom: none; }
-  .t-old { color: #f87171; flex: 1; }
-  .t-arr { color: var(--muted); font-size: 0.7rem; }
-  .t-new { color: var(--green); flex: 1; text-align: right; }
-
-  /* PRIVACY BADGE */
-  .privacy-strip {
-    background: var(--green-dim);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 12px;
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .privacy-strip .icon { font-size: 1.5rem; flex-shrink: 0; }
-  .privacy-strip p { font-size: 0.82rem; color: var(--muted); }
-  .privacy-strip strong { color: var(--green); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--muted);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
+  footer { padding: 1.5rem; text-align: center; font-size: 0.75rem; color: var(--muted); display: flex; justify-content: center; gap: 1.5rem; border-top: 1px solid var(--border); }
   footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   footer a:hover { color: var(--green); }
-  .footer-links { display: flex; gap: 1.5rem; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-
-  @media (max-width: 600px) {
-    nav { padding: 1rem 1.25rem; }
-    .nav-links { gap: 1rem; }
-    .privacy-strip { flex-direction: column; text-align: center; }
-  }
 </style>
 </head>
 <body>
-
 <nav>
-  <a class="nav-logo" href="index.html">ContactFixer<span class="dot">.</span></a>
+  <a class="nav-logo" href="index.html">ContactFixer<span>.</span></a>
   <div class="nav-links">
     <a href="support.html">Support</a>
     <a href="privacy.html">Privacy</a>
   </div>
 </nav>
-
-<section class="hero">
-  <p class="hero-eyebrow">iOS App</p>
+<main>
   <h1>Your contacts,<br><em>properly formatted.</em></h1>
-  <p class="hero-sub">ContactFixer finds every US phone number missing the +1 country code and fixes them all in one tap — privately, on your device.</p>
-
-  <div class="phone-wrap">
-    <div class="phone">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="phone-title">ContactFixer</div>
-        <div class="contact-row">
-          <span class="contact-name">Alex Johnson</span>
-          <span class="contact-num">
-            <span class="old">(708) 555-0142</span>
-            <span class="arrow">→</span>
-            <span class="new">+17085550142</span>
-          </span>
-        </div>
-        <div class="contact-row">
-          <span class="contact-name">Sarah Chen</span>
-          <span class="contact-num">
-            <span class="old">312-555-0198</span>
-            <span class="arrow">→</span>
-            <span class="new">+13125550198</span>
-          </span>
-        </div>
-        <div class="contact-row">
-          <span class="contact-name">Riverside Clinic</span>
-          <span class="contact-num">
-            <span class="old">8005550167</span>
-            <span class="arrow">→</span>
-            <span class="new">+18005550167</span>
-          </span>
-        </div>
-        <div class="contact-row">
-          <span class="contact-name">Mike Torres</span>
-          <span class="contact-num">
-            <span class="old">(847) 555-0031</span>
-            <span class="arrow">→</span>
-            <span class="new">+18475550031</span>
-          </span>
-        </div>
-        <button class="phone-btn">APPLY ALL CHANGES</button>
-      </div>
-    </div>
+  <p class="sub">Adds +1 to your US phone numbers in one tap. Private, free, on-device.</p>
+  <div class="demo">
+    <div class="row"><span class="old">(708) 555-0142</span><span class="arr">→</span><span class="new">+17085550142</span></div>
+    <div class="row"><span class="old">312-555-0198</span><span class="arr">→</span><span class="new">+13125550198</span></div>
+    <div class="row"><span class="old">8005550167</span><span class="arr">→</span><span class="new">+18005550167</span></div>
   </div>
-</section>
-
-<section class="section">
-  <p class="section-label">Features</p>
-  <h2>Everything you need,<br>nothing you don't.</h2>
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">🔍</div>
-      <h3>Smart scanning</h3>
-      <p>Instantly finds every US number missing the +1 prefix across your entire contacts list.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">👁</div>
-      <h3>Preview first</h3>
-      <p>See every change before it's made — names, old numbers, and new numbers side by side.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🌍</div>
-      <h3>International safe</h3>
-      <p>Numbers already starting with + are never touched. Your international contacts stay intact.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <h3>100% private</h3>
-      <p>No servers, no accounts, no analytics. Your contacts never leave your device.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h3>One tap</h3>
-      <p>Review the list, tap Apply — done. No fiddling with exports or third-party services.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" style="padding-top: 0;">
-  <p class="section-label">How it works</p>
-  <h2>Three steps to tidy contacts.</h2>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-content">
-        <h3>Grant contacts access</h3>
-        <p>Tap Scan Contacts and allow access when prompted. Standard iOS permissions — you're in control.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-content">
-        <h3>Review the changes</h3>
-        <p>ContactFixer shows you every number it plans to update. Scroll through and verify before committing.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-content">
-        <h3>Apply all changes</h3>
-        <p>One tap updates all contacts instantly via the native iOS Contacts framework.</p>
-      </div>
-    </div>
-  </div>
-
-  <br><br>
-  <p class="section-label">What gets fixed</p>
-  <div class="transform-demo">
-    <div class="transform-row"><span class="t-old">(708) 555-0142</span><span class="t-arr">→</span><span class="t-new">+17085550142</span></div>
-    <div class="transform-row"><span class="t-old">312-555-0198</span><span class="t-arr">→</span><span class="t-new">+13125550198</span></div>
-    <div class="transform-row"><span class="t-old">8005550167</span><span class="t-arr">→</span><span class="t-new">+18005550167</span></div>
-    <div class="transform-row"><span class="t-old">17085550031</span><span class="t-arr">→</span><span class="t-new">+17085550031</span></div>
-    <div class="transform-row"><span class="t-old" style="color:var(--muted)">+44 7911 123456</span><span class="t-arr">→</span><span class="t-new" style="color:var(--muted)">+44 7911 123456 (unchanged)</span></div>
-  </div>
-
-  <div class="privacy-strip">
-    <span class="icon">🛡</span>
-    <p><strong>Your data stays on your device.</strong> ContactFixer has no backend, no account system, and makes no network requests. It reads and writes your contacts using Apple's native Contacts framework — the same way the built-in Contacts app does.</p>
-  </div>
-</section>
-
+</main>
 <footer>
-  <div class="footer-links">
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="support.html">Support</a>
-  </div>
-  <p>© 2026 ContactFixer. Made for iPhone.</p>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="support.html">Support</a>
+  <span>© 2026 ContactFixer</span>
 </footer>
-
 </body>
 </html>
